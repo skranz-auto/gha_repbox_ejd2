@@ -37,19 +37,19 @@ run = function() {
   cat("\n\nREPBOX ANALYSIS START\n")
 
   # Download supplement
-  source(file.path("~/scripts/download.R", io_config$art$download_script))
+  source("~/scripts/download.R")
 
   # Possibly extract encrypted 7z files
   source("~/scripts/encripted_7z.R")
-  if (isTRUE(io_config$art$encryption)) {
-    extract_all_encrypted_7z("/root/art")
-  }
+  #if (isTRUE(io_config$art$encryption)) {
+  #  extract_all_encrypted_7z("/root/art")
+  #}
   if (isTRUE(io_config$sup$encryption)) {
     extract_all_encrypted_7z("/root/sup")
   }
 
   # Possibly extract ZIP file for article
-  extract_all_zip("/root/art")
+  #extract_all_zip("/root/art")
 
 
   suppressPackageStartupMessages(library(repboxRun))
