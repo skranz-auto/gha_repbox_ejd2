@@ -11,7 +11,7 @@ my.dir.copy = function (from, to, ...) {
 
 run = function() {
   io_config = yaml::yaml.load_file("/root/io_config.yml")
-  config = yaml::yaml.load_file("/root/config.yml")
+  config = yaml::yaml.load_file("/root/repbox_config.yml")
 
 
   if (isTRUE(io_config$output$encryption)) {
