@@ -101,10 +101,10 @@ run = function() {
     cat("\nSUPPLEMENT UNPACKED SIZE: ", round(org.mb,2), " MB\n")
 
     html_opts = repboxHtml::repbox_html_opts_just_ejd()
-    steps = repboxRun::repbox_steps_from(file_info = TRUE, static_code=TRUE,art=FALSE, reproduction = TRUE,reg=FALSE,repbox_repdb = FALSE,html = TRUE)
+    steps = repboxRun::repbox_steps_from(file_info = TRUE, static_code=TRUE,art=FALSE, reproduction = TRUE,reg=FALSE,repbox_repdb = TRUE,mr_base = FALSE, map = FALSE, html = TRUE)
 
-    opts = repbox_run_opts()
-    repbox_run_project(project_dir, lang = c("stata","r"), opts=opts)
+    opts = repbox_run_opts(stop.on.error = FALSE, html_opts=html_opts)
+    repbox_run_project(project_dir, lang = c("stata"), opts=opts, steps=steps)
   })
   system("chmod -R 777 /root/projects")
 
@@ -126,6 +126,11 @@ Store results as encrypted 7z\n*************************************************
     to.7z(path,"/root/output/results.7z",password = password)
   } else {
     cat("\nStore results\n")
+
+    my.dir.copy("/root/projects/project/meta", "/root/output")
+    my.dir.copy("/root/projects/project/steps", "/root/output")
+    my.dir.copy("/root/projects/project/repbox", "/root/output")
+    my.dir.copy("/root/projects/project/metareg", "/root/output")
     my.dir.copy("/root/projects/project/reports", "/root/output")
     my.dir.copy("/root/projects/project/repdb", "/root/output")
 
