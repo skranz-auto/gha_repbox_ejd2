@@ -12,7 +12,7 @@ if (repo_type == "zip_url" | repo_type == "dv") {
   url = config$url
   cat("\nDownload supplement from ", url,"\n")
   options(timeout=60*60)
-  download.file(url, "/root/zip/supplement.zip")
+  download.file(url, "/root/sup/supplement.zip")
 } else if (repo_type == "oi") {
   source("~/scripts/download_oi.R")
 } else if (repo_type == "ze") {
@@ -20,9 +20,9 @@ if (repo_type == "zip_url" | repo_type == "dv") {
   cat("\nDownload Zenodo supplement ", repo_id,"\n")
   source("~/scripts/download_ze.R")
   options(timeout=60*60)
-  download_zenodo_zip(repo_id, "/root/zip")
+  download_zenodo_zip(repo_id, "/root/sup")
 }
 
-cat("\nResulting content of download folder: /root/zip\n")
-print(list.files("/root/zip/"))
+cat("\nResulting content of download folder: /root/sup\n")
+print(list.files("/root/sup/"))
 cat("\n")
