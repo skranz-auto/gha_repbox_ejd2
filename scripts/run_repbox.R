@@ -62,8 +62,6 @@ run = function() {
   start.time = Sys.time()
   cat(paste0("\nAnalysis starts at ", start.time," (UTC)\n"))
 
-  # To do: Parse options from run_config.yml
-
   #
   sup_zip = list.files("/root/sup", glob2rx("*.zip"), ignore.case=TRUE, full.names = TRUE,recursive = TRUE)
   if (length(sup_zip) != 1) {
