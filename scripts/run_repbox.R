@@ -103,7 +103,7 @@ run = function() {
     html_opts = repboxHtml::repbox_html_opts_just_ejd()
     steps = repboxRun::repbox_steps_from(file_info = TRUE, static_code=TRUE,art=FALSE, reproduction = TRUE,reg=FALSE,repbox_repdb = TRUE,mr_base = FALSE, map = FALSE, html = TRUE)
 
-    opts = repbox_run_opts(stop.on.error = FALSE, html_opts=html_opts)
+    opts = repbox_run_opts(stop.on.error = FALSE, html_opts=html_opts,timeout = 60*60*5)
     repbox_run_project(project_dir, lang = c("stata"), opts=opts, steps=steps)
   })
   system("chmod -R 777 /root/projects")
