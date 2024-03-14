@@ -15,7 +15,7 @@ download_zenodo_zip <- function(record_id, destdir, destfile = NULL) {
   }
   zip_ind = min(zip_inds)
   encoded_file_name = URLencode(files[zip_ind])
-  url <- paste0("https://zenodo.org/record/", zen_id, "/files/", encoded_file_name)
+  url <- paste0("https://zenodo.org/record/", record_id, "/files/", encoded_file_name)
   if (is.null(destfile)) {
     destfile = basename(url)
   }
