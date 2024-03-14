@@ -3,7 +3,7 @@ download_zenodo_zip <- function(record_id, destdir, destfile = NULL) {
   #url = "https://doi.org/10.5281/zenodo.6210284"
   #record_id = str.right.of(url,"zenodo.")
 
-  files_df = zenodo_list_deposit_files(record_id)
+  file_df = zenodo_list_deposit_files(record_id)
   files = file_df$key
   zip_inds = which(endsWith(files,".zip"))
   if (length(zip_inds)==0) {
@@ -36,8 +36,8 @@ zenodo_list_deposit_files = function(zen_id) {
     json_data <- fromJSON(content)
 
     # Convert the files information to a data frame
-    files_df <- as.data.frame(json_data$files)
-    return(files_df)
+    file_df <- as.data.frame(json_data$files)
+    return(file_df)
   } else {
     print(paste("Request failed with status", status_code(response)))
     return(NULL)
