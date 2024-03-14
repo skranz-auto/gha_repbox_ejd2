@@ -3,26 +3,43 @@ download_zenodo_zip <- function(record_id, destdir, destfile = NULL) {
   #url = "https://doi.org/10.5281/zenodo.6210284"
   #record_id = str.right.of(url,"zenodo.")
 
-
-  qry <- paste0("https://zenodo.org/api/records/", record_id)
-
-  res  <- httr::GET(qry)
-  record  <- jsonlite::fromJSON(httr::content(res, as = "text", encoding="UTF-8"))
-
-  url <- record$files$links$download
-  if (length(url)==0) {
-    cat("\nWARNING: Zenodo repo contains no file.")
+  files_df = zenodo_list_deposit_files(record_id)
+  files = file_df$key
+  zip_inds = which(endsWith(files,".zip"))
+  if (length(zip_inds)==0) {
+    cat("\nWARNING: Zenodo repo contains no zip file.")
     return(NULL)
-  }
-
-  if (length(url)>1 | !all(tolower(tools::file_ext(url))=="zip")) {
+  } else if (length(zip_inds)>1) {
     cat("\nWARNING: Zenodo repo contains more than one file. Currently we assume that there is just a single zip file.")
-    #invisible(lapply(url, function(x)
-      #download.file(x, norm_path(dest_folder, basename(x)))))
     return(NULL)
   }
+  zip_ind = min(zip_inds)
+  encoded_file_name = URLencode(files[zip_ind])
+  url <- paste0("https://zenodo.org/record/", zen_id, "/files/", encoded_file_name)
   if (is.null(destfile)) {
     destfile = basename(url)
   }
   download.file(url, file.path(destdir, destfile))
+}
+
+zenodo_list_deposit_files = function(zen_id) {
+  library(httr)
+  library(jsonlite)
+
+  # Make the GET request to Zenodo API
+  response <- GET(paste0("https://zenodo.org/api/records/", zen_id))
+
+  # Check if the request was successful
+  if (status_code(response) == 200) {
+    # Parse the JSON content from the response
+    content <- content(response, "text", encoding="UTF-8")
+    json_data <- fromJSON(content)
+
+    # Convert the files information to a data frame
+    files_df <- as.data.frame(json_data$files)
+    return(files_df)
+  } else {
+    print(paste("Request failed with status", status_code(response)))
+    return(NULL)
+  }
 }
