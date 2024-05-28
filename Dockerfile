@@ -1,4 +1,4 @@
-FROM skranz/repbox_mono:ejd
+FROM skranz/repbox_mono:dev
 
 ARG STATA_LIC
 
