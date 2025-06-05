@@ -4,7 +4,7 @@ download_zenodo_zip <- function(record_id=NULL, destdir, destfile = NULL, url=NU
   #url = "https://doi.org/10.5281/zenodo.6210284"
   #record_id = str.right.of(url,"zenodo.")
 
-  if is.null(url) {
+  if (is.null(url)) {
     file_df = zenodo_list_deposit_files(record_id)
     files = file_df$key
     zip_inds = which(endsWith(files,".zip"))
